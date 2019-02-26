@@ -71,6 +71,7 @@ db.sqlite3
 
 # Flask stuff:
 instance/
+migrations/
 
 # Scrapy stuff:
 .scrapy
@@ -239,6 +240,7 @@ modules.xml
 # Django stuff:
 
 # Flask stuff:
+secret_config.py
 
 # Scrapy stuff:
 
