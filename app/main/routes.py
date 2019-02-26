@@ -1,6 +1,7 @@
 from app.main import bp
+from flask import render_template
 
 @bp.route("/")
 @bp.route("/home")
 def home():
-    return "Hello in my rooms!"
+    return render_template('main/home.html', title = 'Home')
