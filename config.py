@@ -1,6 +1,6 @@
 import os
 
-basedir = os.path.abspath(os.path.dirname(__file__))
+BASEDIR = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config(object):
@@ -21,3 +21,5 @@ class TestingConfig(Config):
     ENV = 'testing'
     DEBUG = False
     TESTING = True
+    WTF_CSRF_ENABLED = False
+    SQLALCHEMY_DATABASE_URI = 'mysql://test_admin:password@localhost/reservation_test'

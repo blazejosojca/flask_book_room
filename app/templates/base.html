@@ -1,55 +1,95 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-      <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-      <script src="{{ url_for('static', filename='main.js') }}"></script>
-  <title>Document</title>
-</head>
+{% extends 'bootstrap/base.html' %}
+{% block head %}
+
+{% block styles %}
+{{ super() }}
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+
+{% endblock styles %}
+
+{% if title %}
+    <title>{{ title }} - ReserOvation</title>
+    {% else %}
+    <title>{{ 'Welcome to ReservOvation' }}</title>
+    {% endif %}
+
+{% endblock head %}
+
+{% block body %}
 <body>
+    <header class="site-header">
+    {% block navbar %}
+        <nav class="navbar-default siteheader">
+          <div class="container-fluid">
+              <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                  </button>
 
-<header>
-    <nav>
-      <div class="nav-wrapper blue lighten-2">
-        <a href="#!" class="brand-logo center">ReserOvation!</a>
-          <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Rooms</a></li>
-            <li><a href="#">Account</a></li>
-          </ul>
-      </div>
-    </nav>
-</header>
+              </div>
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul class="nav navbar-nav">
+                      <li><a href="{{ url_for('main.home') }}">Home</a></li>
+                      <li><a href="#">Rooms</a></li>
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right navbar-light bg-light">
+                      {% if current_user.is_anonymous %}
+                      <li class="form-inline">
+                          <button class="btn btn-outline-success" type="button">
+                          <a href="{{ url_for('auth.login') }}">Login</a>
+                          </button>
+                      </li>
 
-<article>
-    <div>
-      Content
-    </div>
-</article>
+                      {% else %}
+                      <li class="form-inline">
+                          <button class="btn btn-outline-success" type="button">
+                          <a href="#">Account</a>
+                          </button>
+                      </li>
+                      <li class="form-inline">
+                          <button class="btn btn-link" type="button">
+                          <a href="{{ url_for('auth.logout') }}">Logout</a>
+                          </button>
+                      </li>
+                      {% endif %}
+                  </ul>
+              </div>
 
-  <footer class="page-footer blue darken-4">
-    <div class="container">
-        <div class="row">
-            <div class="col l6 s12">
-                <h5 class="white-text">Footer Content</h5>
-                    <p class="grey-text text-lighten-4">
-                        You can use rows and columns here to organize your footer content.
-                    </p>
-            </div>
-        </div>
-  </div>
-      <div class="footer-copyright">
-          <div class="container">
-            © 2014 Copyright Text
-            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
           </div>
-      </div>
-  </footer>
+        </nav>
+    {% endblock %}
+    </header>
+
+<div class="jumbotron">
+    <div class="container">
+      <h1 class="display-3">ReserOvation</h1>
+    </div>
+</div>
+<main role="main" class="container">
+    <div class="row">
+        <div class="col-md-8">
+    {% block content %}
+        {% with messages=get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for message in messages %}
+                  <div class="alert alert-{{ category }}" role="alert">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block app_content %}
+        {% endblock app_content %}
+
+    {% endblock content %}
+        </div>
+    </div>
+</main>
 
 </body>
-</html>
+{% endblock body %}

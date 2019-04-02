@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">
+            {{ _('Login')}}
+        </legend>
+        <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+            {{ wtf.quick_form(form) }}
+            </div>
+        </div>
+        </div>
+    </fieldset>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            {{ _('Need an account? Go to') }}
+            <a class="ml-2" href="{{ url_for('auth.register') }}">{{ _('Register Page') }}</a>
+        </small>
+    </div>
+
+{% endblock %}
