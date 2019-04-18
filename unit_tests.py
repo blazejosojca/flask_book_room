@@ -4,11 +4,14 @@ from mysql import connector
 
 from flask import current_app, url_for
 from flask_testing import TestCase
+from flask_login import current_user
 
 from app import create_app, db
 from config import TestingConfig, Config, BASEDIR
 
 from app.models import User, Room, Reservation
+from app.auth.routes import login
+from app.admin.routes import current_user, check_admin
 
 TEST_FIRST_NAME = 'John'
 TEST_SECOND_NAME = 'Doe'
@@ -109,13 +112,20 @@ class TestRoutes(BaseTest):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed('auth/login.html')
 
+
 class TestRegistration(BaseTest):
     def test_registration_new_user_with_valid_data(self):
         response = self.register(TEST_FIRST_NAME, TEST_SECOND_NAME, TEST_MOBILE_PHONE, 'new_test@mail.com', TEST_PASSWORD, TEST_PASSWORD)
         self.assert200(response)
 
-class TestLogin(BaseTest):
-    pass
+
+class TestAdmin(BaseTest):
+    def test_admin(self):
+        response = self.login(TEST_USER_EMAIL, TEST_PASSWORD)        current_user.is_admin = False
+        response = self.user.check_admin()
+        self.assertStatus(response.status_code, 403)
+        
+        
 
 
 if __name__ == '__main__':
