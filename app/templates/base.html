@@ -34,26 +34,20 @@
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav">
                       <li><a href="{{ url_for('main.home') }}">Home</a></li>
-                      <li><a href="#">Rooms</a></li>
+                      <li><a href="{{ url_for('rooms.list_rooms') }}">Rooms</a></li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right navbar-light bg-light">
                       {% if current_user.is_anonymous %}
                       <li class="form-inline">
-                          <button class="btn btn-outline-success" type="button">
                           <a href="{{ url_for('auth.login') }}">Login</a>
-                          </button>
                       </li>
 
                       {% else %}
                       <li class="form-inline">
-                          <button class="btn btn-outline-success" type="button">
                           <a href="#">Account</a>
-                          </button>
                       </li>
                       <li class="form-inline">
-                          <button class="btn btn-link" type="button">
                           <a href="{{ url_for('auth.logout') }}">Logout</a>
-                          </button>
                       </li>
                       {% endif %}
                   </ul>
@@ -73,10 +67,10 @@
     <div class="row">
         <div class="col-md-8">
     {% block content %}
-        {% with messages=get_flashed_messages(with_categories=true) %}
+        {% with messages=get_flashed_messages(with_categories=false) %}
             {% if messages %}
                 {% for message in messages %}
-                  <div class="alert alert-{{ category }}" role="alert">
+                  <div class="alert" role="alert">
                     {{ message }}
                   </div>
                 {% endfor %}

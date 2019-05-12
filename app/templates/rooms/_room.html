@@ -1,13 +1,29 @@
 {% block app_content %}
 <div class="row">
-    <ul>
-        <li>
-            {{ room.name }}
+      <ul class="list-group">
+        <li class="list-group-item">Name - {{ room.name }}</li>
+        <li class="list-group-item">Capacity -
             {{ room.capacity }}
-            {{ room.has_projector }}
-            {{ room.has_air_condition }}
         </li>
-    </ul>
+        <li class="list-group-item">Objector -
+            {% if room.has_projector %}
+            Yes
+            {% else %}
+            No
+            {% endif %}
+        </li>
+        <li class="list-group-item">Air condition - {{ room.has_air_condition }}</li>
+      </ul>
+
 </div>
+
+<div>
+    <a href="{{ url_for ('rooms.create_room') }}" type="button" class="btn btn-primary" methods="post" >Update</a>
+    <a href="{{ url_for ('rooms.delete_room', room_id=room.id) }}" class="btn btn-warning" type="button" >Delete</a>
+    </div>
+
+    <div>
+        <a href="#" type="button" class="btn btn-info btn-lg btn-block">Make Reservation</a>
+    </div>
 
 {% endblock %}

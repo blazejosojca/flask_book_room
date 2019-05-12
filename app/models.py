@@ -38,7 +38,7 @@ class Room(db.Model):
     capacity = db.Column(db.Integer, default=1)
     has_projector = db.Column(db.Boolean, default=False)
     has_air_condition = db.Column(db.Boolean, default=False)
-    
+
     def __repr__(self):
         return '< Room: {}>'.format(self.name)
 
@@ -49,6 +49,7 @@ class Reservation(db.Model):
     datetime_of_booking = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     booking_date = db.Column(db.Date, nullable=False)
     description = db.Column(db.String(128), nullable=True)
+    reserved = db.Column(db.Boolean, )
     
     def __repr__(self):
         return '<Reservation: {} reserved {} {} >'.format(self.user_id, self.room_id, self.date_reservation)

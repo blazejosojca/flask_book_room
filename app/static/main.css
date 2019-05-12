@@ -1,7 +1,7 @@
 body {
   background: #d9e6f2;
   color: #333333;
-  margin-top: 1rem;
+  font-family: "Blippo", Blippo, seriff;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -9,7 +9,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .bg-steel {
-  background-color: #2d5986;
+  background-color: #d9e6f2;
 }
 
 .site-header .navbar-nav .nav-link .navbar-brand{
@@ -25,7 +25,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .content-section {
-  background: #ffffff;
+  background: #d9e6f2;
   padding: 10px 20px;
   border: 1px solid #dddddd;
   border-radius: 3px;
@@ -96,11 +96,13 @@ border-top-left-radius: 0.3rem;
 border-top-right-radius: 0.3rem;
 border-bottom-right-radius: 0.3rem;
 border-bottom-left-radius: 0.3rem;
-text-align:center;
+text-align: center;
+font-family: 'Impact', fantasy;
+font-stretch: extra-expanded;
+color: red;
 }
 
 .display-3 {
-color: #2d5986;
 font-size: 3.5rem;
 font-weight: 300;
 }

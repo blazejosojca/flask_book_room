@@ -37,7 +37,7 @@ def login():
         user=User.query.filter_by(
             email=form.email.data).first()
         if user is None or not user.check_password(form.password.data):
-            flash("Invalid credentials!", 'info')
+            flash("Invalid credentials!")
             return redirect(url_for('auth.login'))
         login_user(user, remember=form.remember.data)
         flash('WOW')
