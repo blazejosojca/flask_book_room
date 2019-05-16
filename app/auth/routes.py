@@ -8,7 +8,7 @@ from app.auth import bp
 from app.auth.forms import RegistrationForm, LoginForm
 
 
-@bp.route("/register", methods=['GET', 'POST'])
+@bp.route("/register", methods=['POST', 'GET'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
@@ -17,8 +17,7 @@ def register():
         user = User(
             first_name=form.first_name.data,
             second_name=form.second_name.data,
-            email=form.email.data,
-            mobile_phone=form.mobile_phone.data
+            email=form.email.data
             )
         user.set_password(form.password.data)
         db.session.add(user)

@@ -17,7 +17,6 @@ class User(UserMixin, db.Model):
     first_name = db.Column(db.String(64), nullable=False)
     second_name = db.Column(db.String(64), nullable=False)
     email = db.Column(db.String(64), nullable=False, unique=True)
-    mobile_phone = db.Column(db.String(9), nullable=True, unique=True)
     password_hashed = db.Column(db.String(128), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
     last_seen = db.Column(db.DateTime, default=datetime.utcnow())
@@ -44,12 +43,14 @@ class Room(db.Model):
 
 
 class Reservation(db.Model):
+    """In this model booking_date is a day when user make the reservation.
+     And reservation_date is a date of day when user want to use the room."""
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True, nullable=False)
     room_id = db.Column(db.Integer, db.ForeignKey('room.id'), primary_key=True, nullable=False)
-    datetime_of_booking = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    booking_date = db.Column(db.Date, nullable=False)
+    booking_date= db.Column(db.Date, nullable=False, default=datetime.utcnow())
+    reservation_date = db.Column(db.Date, nullable=False)
     description = db.Column(db.String(128), nullable=True)
-    reserved = db.Column(db.Boolean, )
+    reserved = db.Column(db.Boolean, nullable=False)
     
     def __repr__(self):
-        return '<Reservation: {} reserved {} {} >'.format(self.user_id, self.room_id, self.date_reservation)
+        return '<Reservation: {} reserved {} on {} >'.format(self.user_id, self.room_id, self.reservation_date)

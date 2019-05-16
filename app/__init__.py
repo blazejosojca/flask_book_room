@@ -39,11 +39,13 @@ def create_app(config_class=DevelopmentConfig):
     from app.errors import bp as errors_bp
     from app.main import bp as main_bp
     from app.rooms import bp as rooms_bp
+    from app.reservations import bp as reservations_bp
 
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(admin_bp, url_prefix='/admin')
     app.register_blueprint(errors_bp)
     app.register_blueprint(main_bp)
     app.register_blueprint(rooms_bp)
+    app.register_blueprint(reservations_bp)
 
     return app

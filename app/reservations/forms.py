@@ -7,10 +7,11 @@ from app.models import Reservation
 
 
 class ReservationForm(FlaskForm):
-    name = StringField(_('Name'), validators=[DataRequired(), Length(min=3, max=60)])
-    capacity = IntegerField(_('Capacity'), validators=[DataRequired()])
-    projector = BooleanField(_("Projector"))
-    air_condition = BooleanField(_("Air condition"))
+    user = StringField(_('Host'), validators=[DataRequired])
+    room = IntegerField()
+    today = IntegerField()
+    date_ = IntegerField()
+
     submit = SubmitField(_("Done!"))
 
 

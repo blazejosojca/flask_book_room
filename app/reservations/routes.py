@@ -13,9 +13,10 @@ from app.reservations.forms import ReservationForm
 
 @bp.route('/reservations/<int:room_id>', methods=['GET', 'POST'])
 @login_required
-def make_reservation(room_id, username):
+def make_reservation(room_id):
     form = ReservationForm()
-    user = User.query.filter_by(username=username).first()
+    user_id = current_user.id
+    user = User.query.filter_by(id=user_id).first()
     if form.validate_on_submit():
         reservation=Reservation(
             user_id=user,
@@ -28,7 +29,7 @@ def make_reservation(room_id, username):
         db.session.commit()
         flash(_('Reservation has been made'))
         return redirect(url_for('rooms.list_rooms'))
-    return render_template('rooms/create_room.html', title=create_room, form=form, legend='New room')
+    return render_template('rooms/create_room.html', title='create_room', form=form, legend='New room')
 
 @bp.route('/reservation/<int:reservation_id>', methods=['GET', 'POST'])
 def view_reservation():

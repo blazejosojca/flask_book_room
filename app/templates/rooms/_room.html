@@ -23,7 +23,7 @@
     </div>
 
     <div>
-        <a href="#" type="button" class="btn btn-info btn-lg btn-block">Make Reservation</a>
+        <a href="{{ url_for ('reservations.make_reservation', room_id=room.id) }}" type="button" class="btn btn-info btn-lg btn-block">Make Reservation</a>
     </div>
 
 {% endblock %}

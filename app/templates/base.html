@@ -33,20 +33,26 @@
               </div>
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav">
-                      <li><a href="{{ url_for('main.home') }}">Home</a></li>
-                      <li><a href="{{ url_for('rooms.list_rooms') }}">Rooms</a></li>
+                      <li type="button" class="btn light">
+                          <a href="{{ url_for('main.home') }}">Home</a>
+                      </li>
+                      <li type="button" class="btn btn-light">
+                          <a href="{{ url_for('rooms.list_rooms') }}">Rooms</a>
+                      </li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right navbar-light bg-light">
                       {% if current_user.is_anonymous %}
-                      <li class="form-inline">
+                      <li type="button" class="btn btn-light">
                           <a href="{{ url_for('auth.login') }}">Login</a>
                       </li>
-
+                      <li type="button" class="btn btn-light">
+                          <a href="{{ url_for('auth.register') }}">Register</a>
+                      </li>
                       {% else %}
-                      <li class="form-inline">
+                      <li type="button" class="btn btn-light">
                           <a href="#">Account</a>
                       </li>
-                      <li class="form-inline">
+                      <li type="button" class="btn btn-light">
                           <a href="{{ url_for('auth.logout') }}">Logout</a>
                       </li>
                       {% endif %}
@@ -67,7 +73,7 @@
     <div class="row">
         <div class="col-md-8">
     {% block content %}
-        {% with messages=get_flashed_messages(with_categories=false) %}
+        {% with messages=get_flashed_messages() %}
             {% if messages %}
                 {% for message in messages %}
                   <div class="alert" role="alert">
