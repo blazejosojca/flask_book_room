@@ -1,48 +1,68 @@
-import os
+
 from datetime import datetime
-from flask import url_for, render_template, flash, request, abort
+from flask import url_for, render_template, flash
 from flask_login import current_user, login_required
-from flask_babel import _, lazy_gettext as _l
+
 from werkzeug.utils import redirect
 
 from app import db
-from app.models import Reservation, User,Room
+from app.models import Reservation, Room
 from app.reservations import bp
-from app.admin.routes import check_admin
 from app.reservations.forms import ReservationForm
 
-@bp.route('/reservations/<int:room_id>', methods=['GET', 'POST'])
+
+@bp.route('/reservations/<int:room_id>', methods=['POST', 'GET'])
 @login_required
 def make_reservation(room_id):
     form = ReservationForm()
-    user_id = current_user.id
-    user = User.query.filter_by(id=user_id).first()
+    room = Room.query.filter_by(id=room_id).first()
     if form.validate_on_submit():
-        reservation=Reservation(
-            user_id=user,
+        reservation = Reservation(
+            user_id=current_user.id,
             room_id=room_id,
-            datetime_of_booking=datetime.utcnow(),
-            booking_date=form.booking_date.data,
-            description = form.description.data
+            booking_date=datetime.utcnow(),
+            reservation_date=form.reservation_date.data,
+            description=form.description.data,
+            reserved=True,
         )
         db.session.add(reservation)
         db.session.commit()
-        flash(_('Reservation has been made'))
+
+        flash('Reservation has been made')
         return redirect(url_for('rooms.list_rooms'))
-    return render_template('rooms/create_room.html', title='create_room', form=form, legend='New room')
+    return render_template('reservations/reservation.html',
+                           title='make_reservation',
+                           form=form,
+                           legend='New reservation',
+                           room=room,
+                           user=current_user)
+
 
 @bp.route('/reservation/<int:reservation_id>', methods=['GET', 'POST'])
 def view_reservation():
     pass
 
+
 @bp.route('/reservation/delete/<int:reservation_id>', methods=['GET', 'POST'])
 def delete_reservation():
     pass
 
-@bp.route('/reservation/list', methods=['GET', 'POST'])
-def list_reservation():
+
+@bp.route('/reservation/list/<int:room_id>', methods=['GET', 'POST'])
+def list_reservation_for_room():
     pass
+
+
+@bp.route('/reservation/list/<int:user_id>', methods=['GET', 'POST'])
+def list_reservation_for_user():
+    pass
+
 
 @bp.route('/reservation/update/<int:reservation_id>', methods=['GET', 'POST'])
 def update_reservation():
     pass
+
+
+@bp.context_processor
+def inject_now():
+    return {'now': datetime.utcnow()}

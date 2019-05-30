@@ -39,7 +39,7 @@ def login():
             flash("Invalid credentials!")
             return redirect(url_for('auth.login'))
         login_user(user, remember=form.remember.data)
-        flash('WOW')
+        flash('WOW welcome back!')
         return redirect(url_for('main.home'))
     return render_template('auth/login.html', title='Login', form=form)
 

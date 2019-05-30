@@ -1,10 +1,9 @@
-from flask import current_app
 from app import db, login
 from flask_login import UserMixin
 from werkzeug.security import (generate_password_hash,
                                check_password_hash)
 
-from datetime import date, datetime
+from datetime import datetime
 
 
 @login.user_loader
@@ -26,7 +25,10 @@ class User(UserMixin, db.Model):
     
     def check_password(self, password):
         return check_password_hash(self.password_hashed, password)
-        
+
+    def get_user_full_name(self):
+        return '{} {}'.format(self.first_name, self.second_name)
+
     def __repr__(self):
         return '<User: {} {} - {}>'.format(self.first_name, self.second_name, self.email)
 
@@ -41,16 +43,31 @@ class Room(db.Model):
     def __repr__(self):
         return '< Room: {}>'.format(self.name)
 
+    def has_projector_info(self):
+        if self.has_projector:
+            status = "Yes"
+        else:
+            status = "No"
+        return status
+
+    def has_air_condition_info(self):
+        if self.has_air_condition:
+            status = "Yes"
+        else:
+            status = "No"
+        return status
+
 
 class Reservation(db.Model):
+
     """In this model booking_date is a day when user make the reservation.
      And reservation_date is a date of day when user want to use the room."""
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True, nullable=False)
     room_id = db.Column(db.Integer, db.ForeignKey('room.id'), primary_key=True, nullable=False)
-    booking_date= db.Column(db.Date, nullable=False, default=datetime.utcnow())
+    booking_date = db.Column(db.Date, nullable=False)
     reservation_date = db.Column(db.Date, nullable=False)
     description = db.Column(db.String(128), nullable=True)
     reserved = db.Column(db.Boolean, nullable=False)
-    
+
     def __repr__(self):
         return '<Reservation: {} reserved {} on {} >'.format(self.user_id, self.room_id, self.reservation_date)

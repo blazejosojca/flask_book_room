@@ -42,7 +42,10 @@ def list_rooms():
 @login_required
 def details_room(room_id):
     room = Room.query.get_or_404(room_id)
-    return render_template('rooms/view_room.html', room=room)
+    air_condition = room.has_air_condition_info()
+    projector = room.has_projector_info()
+
+    return render_template('rooms/view_room.html', room=room, air_condition=air_condition, projector=projector)
 
 #TODO
 @bp.route('/room/update/<int:room_id>', methods=['GET', 'POST'])

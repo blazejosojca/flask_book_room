@@ -1,17 +1,11 @@
 from flask_wtf import FlaskForm
 from flask_babel import _
-from wtforms import StringField, SubmitField, BooleanField, IntegerField
-from wtforms.validators import DataRequired, ValidationError, Length, EqualTo
-
-from app.models import Reservation
+from wtforms import SubmitField, TextAreaField
+from wtforms.validators import DataRequired, Length
+from wtforms.fields.html5 import DateField
 
 
 class ReservationForm(FlaskForm):
-    user = StringField(_('Host'), validators=[DataRequired])
-    room = IntegerField()
-    today = IntegerField()
-    date_ = IntegerField()
-
+    reservation_date = DateField('Date of reservation', validators=[DataRequired()])
+    description = TextAreaField("Description", validators=[Length(max=130)])
     submit = SubmitField(_("Done!"))
-
-

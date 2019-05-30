@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Reservation of room: {{ room.name }} </h1>
+
+    <div class="content-section">
+    <form action="" method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+
+        <p>
+            {{ form.reservation_date.label }}<br>
+            {{ form.reservation_date() }}
+            {% for error in form.reservation_date.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.description.label }}<br>
+            {{ form.description }}
+            {% for error in form.description.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+        <p>{{ form.submit(class='btn btn-outline-info') }}</p>
+        </fieldset>
+    </form>
+    </div>
+
+{% endblock %}
