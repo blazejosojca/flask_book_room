@@ -39,8 +39,12 @@ def make_reservation(room_id):
 
 
 @bp.route('/reservation/<int:reservation_id>', methods=['GET', 'POST'])
-def view_reservation():
-    pass
+@login_required
+def view_reservation(reservation_id):
+    reservation = Reservation.query.get_or_404(reservation_id)
+
+    return render_template('reservation/view_reservation.html', reservation=reservation)
+
 
 
 @bp.route('/reservation/delete/<int:reservation_id>', methods=['GET', 'POST'])

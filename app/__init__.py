@@ -13,7 +13,7 @@ from config import Config, DevelopmentConfig
 db = SQLAlchemy()
 migrate = Migrate()
 login = LoginManager()
-bootstrapp = Bootstrap()
+bootstrap = Bootstrap()
 login.login_view = 'auth.login'
 login.login_message = _l("Please log in to view this page.")
 babel = Babel()
@@ -26,7 +26,7 @@ def create_app(config_class=DevelopmentConfig):
     db.init_app(app)
     login.init_app(app)
     # mail.init_app(app)
-    bootstrapp.init_app(app)
+    bootstrap.init_app(app)
     migrate.init_app(app, db)
     babel.init_app(app)
 
