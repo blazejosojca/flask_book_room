@@ -6,22 +6,22 @@ from flask_login import current_user, login_required
 from werkzeug.utils import redirect
 
 from app import db
-from app.models import Reservation, Room
-from app.reservations import bp
-from app.reservations.forms import ReservationForm
+from app.models import Booking, Room
+from app.bookings import bp
+from app.bookings.forms import BookingForm
 
 
-@bp.route('/reservations/<int:room_id>', methods=['POST', 'GET'])
+@bp.route('/bookings/<int:room_id>', methods=['POST', 'GET'])
 @login_required
-def make_reservation(room_id):
-    form = ReservationForm()
+def make_booking(room_id):
+    form = BookingForm()
     room = Room.query.filter_by(id=room_id).first()
     if form.validate_on_submit():
-        reservation = Reservation(
+        reservation = Booking(
             user_id=current_user.id,
             room_id=room_id,
             booking_date=datetime.utcnow(),
-            reservation_date=form.reservation_date.data,
+            reservation_date=form.booking_date.data,
             description=form.description.data,
             reserved=True,
         )
@@ -30,7 +30,7 @@ def make_reservation(room_id):
 
         flash('Reservation has been made')
         return redirect(url_for('rooms.list_rooms'))
-    return render_template('reservations/reservation.html',
+    return render_template('booking/booking.html',
                            title='make_reservation',
                            form=form,
                            legend='New reservation',
@@ -38,31 +38,32 @@ def make_reservation(room_id):
                            user=current_user)
 
 
-@bp.route('/reservation/<int:reservation_id>', methods=['GET', 'POST'])
+@bp.route('/reservation/<int:booking_id>', methods=['GET', 'POST'])
 @login_required
-def view_reservation(reservation_id):
-    reservation = Reservation.query.get_or_404(reservation_id)
+def view_reservation(booking_id):
+    
+    reservation = Booking.query.get(reservation_id)
 
-    return render_template('reservation/view_reservation.html', reservation=reservation)
+    return render_template('booking/booking.html.html', booking=booking)
 
 
 
-@bp.route('/reservation/delete/<int:reservation_id>', methods=['GET', 'POST'])
+@bp.route('/reservation/delete/<int:booking_id>', methods=['GET', 'POST'])
 def delete_reservation():
     pass
 
 
 @bp.route('/reservation/list/<int:room_id>', methods=['GET', 'POST'])
-def list_reservation_for_room():
+def list_reservations_for_room():
     pass
 
 
 @bp.route('/reservation/list/<int:user_id>', methods=['GET', 'POST'])
-def list_reservation_for_user():
+def list_reservations_for_user():
     pass
 
 
-@bp.route('/reservation/update/<int:reservation_id>', methods=['GET', 'POST'])
+@bp.route('/reservation/update/<int:booking_id>', methods=['GET', 'POST'])
 def update_reservation():
     pass
 
