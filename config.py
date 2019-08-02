@@ -9,7 +9,7 @@ class Config(object):
     DEBUG = False
     CSRF_ENABLED = True
     SECRET_KEY = 'hard_to_guess_12345678'
-    SQLALCHEMY_DATABASE_URI = 'mysql://test_admin:password@localhost/reservation_db'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:password@localhost/bookings_db'
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
@@ -22,4 +22,4 @@ class TestingConfig(Config):
     DEBUG = False
     TESTING = True
     WTF_CSRF_ENABLED = False
-    SQLALCHEMY_DATABASE_URI = 'mysql://test_admin:password@localhost/reservation_test'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:password@localhost/bookings_test'

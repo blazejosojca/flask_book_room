@@ -16,8 +16,10 @@ class User(UserMixin, db.Model):
     first_name = db.Column(db.String(64), nullable=False)
     second_name = db.Column(db.String(64), nullable=False)
     email = db.Column(db.String(64), nullable=False, unique=True)
+    position_id = db.Column(db.Integer, db.ForeignKey('position.id'))
+    department_id = db.Column(db.Integer, db.ForeignKey('department.id'))
+    bookings = db.relationship('Booking', backref='host', lazy='dynamic')
     password_hashed = db.Column(db.String(128), nullable=False)
-    is_admin = db.Column(db.Boolean, default=False)
     last_seen = db.Column(db.DateTime, default=datetime.utcnow())
     
     def set_password(self, password):
@@ -30,27 +32,50 @@ class User(UserMixin, db.Model):
         return '{} {}'.format(self.first_name, self.second_name)
 
     def __repr__(self):
-        return '<User: {} {} - {}>'.format(self.first_name, self.second_name, self.email)
+        return '<User: {} {} / {}/ {} >'.format(self.first_name, self.second_name, self.department, self.email)
+
+
+class Position(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    position_name = db.Column(db.String(64), nullable=False, unique=True)
+    employers = db.relationship('User', backref='position', lazy='dynamic')
+
+    def __repr__(self):
+        return 'Position {}'.format(self.position_name)
+
+
+class Department(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    department_name = db.Column(db.String(64), nullable=False, unique=True)
+    members = db.relationship('User', backref='department', lazy='dynamic')
+
+    def __repr__(self):
+        return 'Department {}'.format(self.department_name)
 
 
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False)
-    capacity = db.Column(db.Integer, default=1)
-    has_projector = db.Column(db.Boolean, default=False)
-    has_air_condition = db.Column(db.Boolean, default=False)
+    floor = db.Column(db.Integer, nullable=False)
+    seats = db.Column(db.Integer, default=2)
+    projector = db.Column(db.Boolean, default=False)
+    air_condition = db.Column(db.Boolean, default=False)
+    whiteboard = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
-        return '< Room: {}>'.format(self.name)
-
-    def has_projector_info(self):
+        return '< Room: {} >'.format(self.name)
+    
+    def extended_room_info(self):
+        return '< Room: {}, seats {}, floor {}>'.format(self.name, self.seats, self.floor)
+    
+    def has_projector(self):
         if self.has_projector:
             status = "Yes"
         else:
             status = "No"
         return status
 
-    def has_air_condition_info(self):
+    def has_air_condition(self):
         if self.has_air_condition:
             status = "Yes"
         else:
@@ -58,16 +83,19 @@ class Room(db.Model):
         return status
 
 
-class Reservation(db.Model):
-
-    """In this model booking_date is a day when user make the reservation.
-     And reservation_date is a date of day when user want to use the room."""
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True, nullable=False)
-    room_id = db.Column(db.Integer, db.ForeignKey('room.id'), primary_key=True, nullable=False)
+class Booking(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    meeting_title = db.Column(db.String(64))
+    host_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    room_id = db.Column(db.Integer, db.ForeignKey('room.id'), nullable=False)
     booking_date = db.Column(db.Date, nullable=False)
-    reservation_date = db.Column(db.Date, nullable=False)
+    event_date = db.Column(db.Date, nullable=False)
     description = db.Column(db.String(128), nullable=True)
-    reserved = db.Column(db.Boolean, nullable=False)
+
+    def user_name(self):
+        user = User.query.get(load_user)
+        full_name = '{} {}'.format(user.first_name, user.second_name)
+        return full_name
 
     def __repr__(self):
-        return '<Reservation: {} reserved {} on {} >'.format(self.user_id, self.room_id, self.reservation_date)
+        return '<Booking: {} reserved {} on {} >'.format(self.host_id, self.room_id, self.reservation_date)
