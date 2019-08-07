@@ -34,7 +34,7 @@ def create_app(config_class=DevelopmentConfig):
     from app.errors import bp as errors_bp
     from app.main import bp as main_bp
     from app.rooms import bp as rooms_bp
-    from app.bookings import bp as bookings_bo
+    from app.booking import bp as bookings_bo
 
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(errors_bp)

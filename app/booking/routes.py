@@ -7,11 +7,11 @@ from werkzeug.utils import redirect
 
 from app import db
 from app.models import Booking, Room
-from app.bookings import bp
-from app.bookings.forms import BookingForm
+from app.booking import bp
+from app.booking.forms import BookingForm
 
 
-@bp.route('/bookings/<int:room_id>', methods=['POST', 'GET'])
+@bp.route('/booking/<int:room_id>', methods=['POST', 'GET'])
 @login_required
 def make_booking(room_id):
     form = BookingForm()
@@ -38,7 +38,7 @@ def make_booking(room_id):
                            user=current_user)
 
 
-@bp.route('/bookings/<int:booking_id>', methods=['GET', 'POST'])
+@bp.route('/booking/<int:booking_id>', methods=['GET', 'POST'])
 @login_required
 def view_booking(booking_id):
     
@@ -48,22 +48,22 @@ def view_booking(booking_id):
 
 
 
-@bp.route('/bookings/delete/<int:booking_id>', methods=['GET', 'POST'])
+@bp.route('/booking/delete/<int:booking_id>', methods=['GET', 'POST'])
 def delete_booking():
     pass
 
 
-@bp.route('/bookings/list/<int:room_id>', methods=['GET', 'POST'])
+@bp.route('/booking/list/<int:room_id>', methods=['GET', 'POST'])
 def list_bookings_for_room():
     pass
 
 
-@bp.route('/bookings/list/<int:user_id>', methods=['GET', 'POST'])
+@bp.route('/booking/list/<int:user_id>', methods=['GET', 'POST'])
 def list_bookings_for_user():
     pass
 
 
-@bp.route('/bookings/update/<int:booking_id>', methods=['GET', 'POST'])
+@bp.route('/booking/update/<int:booking_id>', methods=['GET', 'POST'])
 def update_bookings():
     pass
 
