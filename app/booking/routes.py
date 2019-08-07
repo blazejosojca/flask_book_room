@@ -38,9 +38,9 @@ def make_booking(room_id):
                            user=current_user)
 
 
-@bp.route('/reservation/<int:booking_id>', methods=['GET', 'POST'])
+@bp.route('/bookings/<int:booking_id>', methods=['GET', 'POST'])
 @login_required
-def view_reservation(booking_id):
+def view_booking(booking_id):
     
     reservation = Booking.query.get(reservation_id)
 
@@ -48,23 +48,23 @@ def view_reservation(booking_id):
 
 
 
-@bp.route('/reservation/delete/<int:booking_id>', methods=['GET', 'POST'])
-def delete_reservation():
+@bp.route('/bookings/delete/<int:booking_id>', methods=['GET', 'POST'])
+def delete_booking():
     pass
 
 
-@bp.route('/reservation/list/<int:room_id>', methods=['GET', 'POST'])
-def list_reservations_for_room():
+@bp.route('/bookings/list/<int:room_id>', methods=['GET', 'POST'])
+def list_bookings_for_room():
     pass
 
 
-@bp.route('/reservation/list/<int:user_id>', methods=['GET', 'POST'])
-def list_reservations_for_user():
+@bp.route('/bookings/list/<int:user_id>', methods=['GET', 'POST'])
+def list_bookings_for_user():
     pass
 
 
-@bp.route('/reservation/update/<int:booking_id>', methods=['GET', 'POST'])
-def update_reservation():
+@bp.route('/bookings/update/<int:booking_id>', methods=['GET', 'POST'])
+def update_bookings():
     pass
 
 
