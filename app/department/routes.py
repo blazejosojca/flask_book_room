@@ -1,4 +1,3 @@
-
 from datetime import datetime
 from flask import url_for, render_template, flash
 from flask_login import current_user, login_required
@@ -14,6 +13,10 @@ from app.department.forms import DepartmentForm
 @bp.route('/department/new', methods=['POST', 'GET'])
 @login_required
 def create_department():
+    """
+    Add department to db
+    :return:
+    """
     form = DepartmentForm()
     if form.validate_on_submit():
         department = Department(
