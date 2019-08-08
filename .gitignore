@@ -276,6 +276,9 @@ secret_config.py
 
 # Pyre type checker
 
+# oracle
+grant
+
 ### Python Patch ###
 .venv/
 
