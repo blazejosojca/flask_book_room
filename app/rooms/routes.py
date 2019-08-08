@@ -9,7 +9,6 @@ from app import db
 from app.models import Room
 from app.rooms import bp
 from app.rooms.forms import RoomForm
-from app.admin.routes import check_admin
 
 
 
@@ -52,7 +51,6 @@ def details_room(room_id):
 @login_required
 def update_room(room_id):
     room = Room.query.get_or_404(room_id)
-    check_admin()
     form = RoomForm()
     if form.validate_on_submit():
         room.name = form.name.data
@@ -76,7 +74,6 @@ def update_room(room_id):
 @login_required
 def delete_room(room_id):
     room = Room.query.get_or_404(room_id)
-    # check_admin()
     db.session.delete(room)
     db.session.commit()
     flash('Room has been deleted ! Database is up to date!')
