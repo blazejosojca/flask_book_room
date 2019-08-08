@@ -9,19 +9,11 @@ from flask_login import current_user
 from app import create_app, db
 from config import TestingConfig, Config, BASEDIR
 
-from app.models import User, Room, Reservation
+from app.models import User, Room, Booking, Department, Position
 from app.auth.routes import login
-from app.admin.routes import current_user, check_admin
-
-TEST_FIRST_NAME = 'John'
-TEST_SECOND_NAME = 'Doe'
-TEST_MOBILE_PHONE = '666000999'
-TEST_USER_EMAIL = 'test@mail.com'
-TEST_PASSWORD = 'password'
-TEST_ADMIN_NAME = 'test_admin'
-TEST_ADMIN_MAIL = 'admin@mail.com'
-TEST_ADMIN_PASSWORD = 'admin123'
-TEST_ADMIN_PASSWORD = 'admin123'
+from app.auth.routes import current_user
+from app.department.routes import create_department
+from app.tests.test_data import TestData as td
 
 
 class BaseTest(TestCase):
@@ -74,8 +66,8 @@ class TestServer(BaseTest):
 
     def test_database_exist(self):
         cnx = connector.connect(host='localhost',
-                                database='reservation_test',
-                                user='test_admin',
+                                database='bookings_test',
+                                user='root',
                                 password='password'
                                 )
         self.assertTrue(cnx)
@@ -90,7 +82,13 @@ class TestModels(BaseTest):
         self.assertEqual(Room.query.count(), 0)
 
     def test_empty_reservation_model(self):
-        self.assertEqual(Reservation.query.count(), 0)
+        self.assertEqual(Booking.query.count(), 0)
+
+    def test_empty_department_model(self):
+        self.assertEqual(Department.query.count(), 0)
+
+    def test_empty_position_model(self):
+        self.assertEqual(Position.query.count(), 0)
 
 
 class TestRoutes(BaseTest):
@@ -115,18 +113,31 @@ class TestRoutes(BaseTest):
 
 class TestRegistration(BaseTest):
     def test_registration_new_user_with_valid_data(self):
-        response = self.register(TEST_FIRST_NAME, TEST_SECOND_NAME, TEST_MOBILE_PHONE, 'new_test@mail.com', TEST_PASSWORD, TEST_PASSWORD)
+        response = self.register(td.TEST_FIRST_NAME, td.TEST_SECOND_NAME, td.TEST_MOBILE_PHONE, 'new_test@mail.com', td.TEST_PASSWORD, td.TEST_PASSWORD)
+        user = User.query.all()
         self.assert200(response)
+        print(user[0])
+        self.assertEqual(1, len(user))
 
+class TestDepartment(BaseTest):
+    def test_add_new_department(self):
+        self.app.post('/department/new', data=dict(
+            name=td.TEST_DEPARTMENT_NAME
+        ))
+        dep_list = Department.query.all()
 
-class TestAdmin(BaseTest):
-    def test_admin(self):
-        response = self.login(TEST_USER_EMAIL, TEST_PASSWORD)        current_user.is_admin = False
-        response = self.user.check_admin()
-        self.assertStatus(response.status_code, 403)
+        self.assertEqual(1, len(dep_list))
         
-        
 
+
+    def test_remove_existing_department(self):
+        pass
+
+    def test_list_existing_department(self):
+        pass
+
+    def test_edit_existing_department(self):
+        pass
 
 if __name__ == '__main__':
     unittest.main()

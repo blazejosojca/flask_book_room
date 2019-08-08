@@ -6,24 +6,37 @@ from flask_login import current_user, login_required
 from werkzeug.utils import redirect
 
 from app import db
-from app.models import Booking, Room
-from app.booking import bp
-from app.booking.forms import BookingForm
+from app.models import Department
+from app.department import bp
+from app.department.forms import DepartmentForm
 
 
-@bp.route('/department/<int:dep_id>', methods=['POST', 'GET'])
+@bp.route('/department/new', methods=['POST', 'GET'])
 @login_required
-def add_department(room_id):
-    pass
+def create_department():
+    form = DepartmentForm()
+    if form.validate_on_submit():
+        department = Department(
+            department_name = form.name.data,
+        )
+        db.session.add(department)
+        db.commit()
 
+        flash('New department was added!')
+        return redirect(url_for('main.home'))
+    return render_template('department/create_department.html',
+                           title='create_department',
+                           form=form,
+                           legend='New department'
+                           )
 
 @bp.route('/booking/<int:booking_id>', methods=['GET', 'POST'])
 @login_required
 def view_depart(booking_id):
     
-    reservation = Booking.query.get(reservation_id)
+    departmen = Department.query.get(booking_id)
 
-    return render_template('booking/booking.html.html', booking=booking)
+    return render_template('booking/booking.html', booking=booking)
 
 
 

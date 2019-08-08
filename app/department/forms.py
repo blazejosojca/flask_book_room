@@ -6,4 +6,5 @@ from wtforms.fields.html5 import DateField
 
 
 class DepartmentForm(FlaskForm):
-    pass
+    name = DateField(_('Enter name of department', validators=[DataRequired()]))
+    submit = SubmitField(_("Done!"))

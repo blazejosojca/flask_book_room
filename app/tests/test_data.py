@@ -1,0 +1,20 @@
+class TestData(object):
+    TEST_FIRST_NAME = 'John'
+    TEST_SECOND_NAME = 'Doe'
+    TEST_USER_EMAIL = 'test@mail.com'
+    TEST_MOBILE_PHONE = '666000999'
+    TEST_POSITION_ID = 1
+    TEST_DEPARTMENT_ID = 1
+    TEST_PASSWORD = 'password'
+    TEST_ADMIN_MAIL = 'admin@mail.com'
+    TEST_ADMIN_PASSWORD = 'admin123'
+
+    TEST_POSITION_NAME = 'CEO'
+    TEST_DEPARTMENT_NAME = 'IT'
+
+    TEST_ROOM_NAME = 'Test Room'
+    TEST_ROOM_FLOOR = 0
+    TEST_ROOM_SEATS = 10
+    TEST_ROOM_PROJECTOR = True
+    TEST_ROOM_AIR_CONDITION = True
+    TEST_ROOM_WHITEBOARD = True

@@ -16,6 +16,7 @@ class User(UserMixin, db.Model):
     first_name = db.Column(db.String(64), nullable=False)
     second_name = db.Column(db.String(64), nullable=False)
     email = db.Column(db.String(64), nullable=False, unique=True)
+    mobile_phone = db.Column(db.String(64))
     position_id = db.Column(db.Integer, db.ForeignKey('position.id'))
     department_id = db.Column(db.Integer, db.ForeignKey('department.id'))
     bookings = db.relationship('Booking', backref='host', lazy='dynamic')
