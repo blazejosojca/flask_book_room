@@ -89,7 +89,7 @@ class Booking(db.Model):
     host_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     room_id = db.Column(db.Integer, db.ForeignKey('room.id'), nullable=False)
     booking_date = db.Column(db.Date, nullable=False)
-    event_date = db.Column(db.Date, nullable=False)
+    meeting_date = db.Column(db.Date, nullable=False)
     description = db.Column(db.String(128), nullable=True)
 
     def user_name(self):
