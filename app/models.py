@@ -71,14 +71,21 @@ class Room(db.Model):
         return '< Room: {}, seats {}, floor {}>'.format(self.name, self.seats, self.floor)
     
     def has_projector(self):
-        if self.has_projector:
+        if self.projector:
             status = "Yes"
         else:
             status = "No"
         return status
 
     def has_air_condition(self):
-        if self.has_air_condition:
+        if self.air_condition:
+            status = "Yes"
+        else:
+            status = "No"
+        return status
+
+    def has_whiteboard(self):
+        if self.whiteboard:
             status = "Yes"
         else:
             status = "No"

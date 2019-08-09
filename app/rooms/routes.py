@@ -20,7 +20,8 @@ def create_room():
     if form.validate_on_submit():
         room=Room(
             name=form.name.data,
-            capacity=form.capacity.data,
+            seats=form.seats.data,
+            floor=form.floor.data,
             projector=form.projector.data,
             air_condition=form.air_condition.data,
             whiteboard=form.whiteboard.data

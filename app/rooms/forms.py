@@ -8,7 +8,8 @@ from app.models import Room
 
 class RoomForm(FlaskForm):
     name = StringField(_('Name'), validators=[DataRequired(), Length(min=3, max=60)])
-    capacity = IntegerField(_('Capacity'), validators=[DataRequired(), NumberRange(1, 99)])
+    seats = IntegerField(_('Capacity'), validators=[DataRequired(), NumberRange(1, 99)])
+    floor = IntegerField(_('Floor'), validators=[DataRequired(), NumberRange(0, 10)])
     projector = BooleanField(_("Projector"))
     air_condition = BooleanField(_("Air condition"))
     whiteboard = BooleanField(_("Whiteboard"))
