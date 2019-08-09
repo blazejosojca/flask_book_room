@@ -122,13 +122,12 @@ class TestRegistration(BaseTest):
 class TestDepartment(BaseTest):
     def test_add_new_department(self):
         self.app.post('/department/new', data=dict(
-            name=td.TEST_DEPARTMENT_NAME
+            department_name=td.TEST_DEPARTMENT_NAME
         ))
         dep_list = Department.query.all()
 
         self.assertEqual(1, len(dep_list))
         
-
 
     def test_remove_existing_department(self):
         pass
