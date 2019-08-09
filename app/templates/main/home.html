@@ -4,16 +4,26 @@
 {% block content %}
 <div>
     <div class="col-md-8">
-            {% for room in rooms %}
+    <div>
+        {% for room in rooms %}
             <ul class="list-group">
                 <li class="list-group-item">
-                   Room <a href="{{ url_for ('rooms.details_room', room_id=room.id) }}">{{ room.name }}</a>
+                   Room
+                    <a href="{{ url_for ('rooms.details_room', room_id=room.id) }}">{{ room.name }}</a>
                 </li>
             </ul>
-            {% endfor %}
-
-            <a href="{{ url_for ('rooms.create_room') }}" type="button" class="btn btn-primary">New room</a>
+        {% endfor %}
     </div>
+    </div>
+            <div class="container">
+                <div class="row">
+                    <div>
+                        <a href="{{ url_for ('rooms.create_room') }}" type="button" class="btn btn-primary">New room</a>
+                    </div>
+                </div>
+            </div>
+
+
 
 </div>
 {% endblock %}
