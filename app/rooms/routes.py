@@ -1,6 +1,4 @@
-import os
-
-from flask import url_for, render_template, flash, request, abort
+from flask import url_for, render_template, flash, request
 from flask_login import current_user, login_required
 from flask_babel import _, lazy_gettext as _l
 from werkzeug.utils import redirect
@@ -11,13 +9,12 @@ from app.rooms import bp
 from app.rooms.forms import RoomForm
 
 
-
 @bp.route('/room/new', methods=['GET', 'POST'])
 @login_required
 def create_room():
     form = RoomForm()
     if form.validate_on_submit():
-        room=Room(
+        room = Room(
             name=form.name.data,
             seats=form.seats.data,
             floor=form.floor.data,
@@ -38,6 +35,7 @@ def list_rooms():
     return render_template('rooms/list_rooms.html', rooms=rooms, title='List of rooms',
                            legend='Rooms')
 
+
 @bp.route('/room/<int:room_id>', methods=['GET', 'POST'])
 def room_details(room_id):
     room = Room.query.get_or_404(room_id)
@@ -51,6 +49,7 @@ def room_details(room_id):
                            whiteboard=whiteboard,
                            title='Room details',
                            legend='Room')
+
 
 @bp.route('/room/update/<int:room_id>', methods=['GET', 'POST'])
 @login_required
@@ -89,4 +88,3 @@ def delete_room(room_id):
     db.session.commit()
     flash('Room has been deleted !')
     return redirect(url_for('rooms.list_rooms'))
-
