@@ -1,51 +1,27 @@
 from flask import url_for, render_template, redirect, flash, request
-from flask_login import current_user, login_user, logout_user
+from flask_login import current_user, login_user, logout_user, login_required
 from flask_babel import _, lazy_gettext as _l
 
 from app import db
 from app.models import User
-from app.auth import bp
+from app.user import bp
 from app.auth.forms import RegistrationForm, LoginForm
 
+@bp.route('user/edit/<int:user_id>')
+@login_required
+def edit_user():
+    pass
 
-@bp.route("/register", methods=['POST', 'GET'])
-def register():
-    if current_user.is_authenticated:
-        return redirect(url_for('main.home'))
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        user = User(
-            first_name=form.first_name.data,
-            second_name=form.second_name.data,
-            email=form.email.data,
-            mobile_phone = form.mobile_phone.data
-            )
-        user.set_password(form.password.data)
-        db.session.add(user)
-        db.session.commit()
+@bp.route('user/<int:user_id>')
+def user_details():
+    pass
 
-        flash(_l("A new user added. Congratulations!"), 'success')
-        return redirect(url_for('auth.login'))
-    return render_template('auth/register.html', title='Register', form=form)
+@bp.route('user/list')
+def list_users():
+    pass
 
-@bp.route('/login', methods=['GET', 'POST'])
-def login():
-    if current_user.is_authenticated:
-        return redirect(url_for('main.home'))
-    form = LoginForm()
-    if form.validate_on_submit():
-        user=User.query.filter_by(
-            email=form.email.data).first()
-        if user is None or not user.check_password(form.password.data):
-            flash("Invalid credentials!")
-            return redirect(url_for('auth.login'))
-        login_user(user, remember=form.remember.data)
-        flash('WOW welcome back!')
-        return redirect(url_for('main.home'))
-    return render_template('auth/login.html', title='Login', form=form)
-
-@bp.route('/logout')
-def logout():
-    logout_user()
-    return redirect(url_for('main.home'))
+@bp.route('user/delete/<int:user_id>')
+@login_required
+def delete_user():
+    pass
 
