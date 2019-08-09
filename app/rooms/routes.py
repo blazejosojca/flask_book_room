@@ -41,12 +41,18 @@ def list_rooms():
 
 @bp.route('/room/<int:room_id>', methods=['GET', 'POST'])
 @login_required
-def details_room(room_id):
+def room_details(room_id):
     room = Room.query.get_or_404(room_id)
-    air_condition = room.has_air_condition_info()
+    air_condition = room.has_air_condition()
     projector = room.has_projector_info()
+    whiteboard = room.has_whiteboard()
 
-    return render_template('rooms/view_room.html', room=room, air_condition=air_condition, projector=projector)
+    return render_template('rooms/view_room.html', room=room,
+                           air_condition=air_condition,
+                           projector=projector,
+                           whiteboard=whiteboard,
+                           title='Room details',
+                           legend='Room')
 
 @bp.route('/room/update/<int:room_id>', methods=['GET', 'POST'])
 @login_required
@@ -56,7 +62,7 @@ def update_room(room_id):
     if form.validate_on_submit():
         room.name = form.name.data
         room.capacity = form.capacity.data
-        room.has_projector = form.has_projector.data
+        room. = form.has_projector.data
         room.has_air_condition = form.has_air_condition.data
         db.session.commit()
         flash(_('Room info has been updated!'))
