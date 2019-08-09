@@ -87,6 +87,6 @@ def delete_room(room_id):
     room = Room.query.get_or_404(room_id)
     db.session.delete(room)
     db.session.commit()
-    flash('Room has been deleted ! Database is up to date!')
+    flash('Room has been deleted !')
     return redirect(url_for('rooms.list_rooms'))
 
