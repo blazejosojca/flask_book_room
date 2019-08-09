@@ -20,7 +20,8 @@ def create_department():
     form = DepartmentForm()
     if form.validate_on_submit():
         department = Department(
-            department_name = form.name.data
+            department_name = form.name.data,
+            description = form.data.data
         )
         db.session.add(department)
         db.session.commit()
@@ -37,7 +38,7 @@ def create_department():
 @login_required
 def view_department(booking_id):
     
-    departmen = Department.query.get(booking_id)
+    department = Department.query.get(booking_id)
 
     return render_template('booking/booking.html', booking=booking)
 
