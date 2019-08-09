@@ -21,8 +21,9 @@ def create_room():
         room=Room(
             name=form.name.data,
             capacity=form.capacity.data,
-            has_projector=form.projector.data,
-            has_air_condition=form.air_condition.data
+            projector=form.projector.data,
+            air_condition=form.air_condition.data,
+            whiteboard=form.whiteboard.data
         )
         db.session.add(room)
         db.session.commit()
@@ -46,7 +47,6 @@ def details_room(room_id):
 
     return render_template('rooms/view_room.html', room=room, air_condition=air_condition, projector=projector)
 
-#TODO
 @bp.route('/room/update/<int:room_id>', methods=['GET', 'POST'])
 @login_required
 def update_room(room_id):

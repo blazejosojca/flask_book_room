@@ -35,11 +35,14 @@ def create_app(config_class=DevelopmentConfig):
     from app.main import bp as main_bp
     from app.rooms import bp as rooms_bp
     from app.booking import bp as bookings_bo
+    from app.department import bp as department_bo
+    from app.position import bp as position_bo
 
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(errors_bp)
     app.register_blueprint(main_bp)
     app.register_blueprint(rooms_bp)
     app.register_blueprint(bookings_bo)
+    app.register_blueprint(department_bo)
 
     return app

@@ -45,6 +45,20 @@
                     {% endif %}
                 </div>
                 <div class="form-group">
+                    {{ form.mobile_phone.label(class='form-control-label') }}
+                    {% if form.mobile_phone.errors %}
+                        {{ form.mobile_phone(class='form-control form-control-md is-invalid') }}
+                        <div class="invalid-feedback">
+                            {% for error in form.mobile_phone.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.mobile_phone(class='form-control form-control-md')}}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
                     {{ form.password.label(class='form-control-label')}}
 
                     {% if form.password.errors %}

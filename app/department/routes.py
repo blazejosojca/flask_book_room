@@ -20,10 +20,10 @@ def create_department():
     form = DepartmentForm()
     if form.validate_on_submit():
         department = Department(
-            department_name = form.name.data,
+            department_name = form.name.data
         )
         db.session.add(department)
-        db.commit()
+        db.session.commit()
 
         flash('New department was added!')
         return redirect(url_for('main.home'))
@@ -35,7 +35,7 @@ def create_department():
 
 @bp.route('/booking/<int:booking_id>', methods=['GET', 'POST'])
 @login_required
-def view_depart(booking_id):
+def view_department(booking_id):
     
     departmen = Department.query.get(booking_id)
 
@@ -44,22 +44,17 @@ def view_depart(booking_id):
 
 
 @bp.route('/booking/delete/<int:booking_id>', methods=['GET', 'POST'])
-def delete_booking():
+def department_list():
     pass
 
 
 @bp.route('/booking/list/<int:room_id>', methods=['GET', 'POST'])
-def list_bookings_for_room():
+def edit_department():
     pass
 
 
 @bp.route('/booking/list/<int:user_id>', methods=['GET', 'POST'])
-def list_bookings_for_user():
-    pass
-
-
-@bp.route('/booking/update/<int:booking_id>', methods=['GET', 'POST'])
-def update_bookings():
+def delete_department():
     pass
 
 

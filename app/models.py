@@ -48,6 +48,7 @@ class Position(db.Model):
 class Department(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     department_name = db.Column(db.String(64), nullable=False, unique=True)
+    description = db.Column(db.String(128))
     members = db.relationship('User', backref='department', lazy='dynamic')
 
     def __repr__(self):
