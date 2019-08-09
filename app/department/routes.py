@@ -62,6 +62,8 @@ def edit_department(department_id):
         department.department_name = form.department_name.data
         department.description = form.description.data
         db.session.commit()
+        flash(('Department info has been updated!'))
+        return redirect(url_for('department.department_list'))
     elif request.method == 'GET':
         department.department_name = form.department_name
         department.description = form.description
@@ -71,9 +73,14 @@ def edit_department(department_id):
                            legend='Edit department')
 
 
-@bp.route('/booking/list/<int:user_id>', methods=['GET', 'POST'])
-def delete_department():
-    pass
+@bp.route('/department/delete/<int:department:id>', methods=['GET', 'POST'])
+@login_required
+def delete_department(department_id):
+    department=Department.query.get_or_404(department_id)
+    db.session.delete(department)
+    db.session.commit()
+    flash('Department has been deleted!')
+    return redirect(url_for('department.department_list'))
 
 
 @bp.context_processor
