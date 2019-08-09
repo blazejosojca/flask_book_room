@@ -15,7 +15,6 @@ from app.rooms.forms import RoomForm
 @bp.route('/room/new', methods=['GET', 'POST'])
 @login_required
 def create_room():
-    # check_admin()
     form = RoomForm()
     if form.validate_on_submit():
         room=Room(
@@ -34,14 +33,12 @@ def create_room():
 
 
 @bp.route('/room/list', methods=['GET', 'POST'])
-@login_required
 def list_rooms():
     rooms = Room.query.all()
     return render_template('rooms/list_rooms.html', rooms=rooms, title='List of rooms',
                            legend='Rooms')
 
 @bp.route('/room/<int:room_id>', methods=['GET', 'POST'])
-@login_required
 def room_details(room_id):
     room = Room.query.get_or_404(room_id)
     air_condition = room.has_air_condition()
@@ -63,21 +60,27 @@ def update_room(room_id):
     if form.validate_on_submit():
         room.name = form.name.data
         room.capacity = form.capacity.data
-        room. = form.has_projector.data
-        room.has_air_condition = form.has_air_condition.data
+        room.floor = form.floor.data
+        room.seats = form.seats.data
+        room.projector = form.projector.data
+        room.air_condition = form.air_condition.data
+        room.whiteboard = form.whiteboard.data
         db.session.commit()
         flash(_('Room info has been updated!'))
         return redirect(url_for('rooms.list_rooms'))
     elif request.method == 'GET':
-        room.name = form.name
-        room.capacity = form.capacity
-        room.has_projector = form.has_projector
-        room.has_air_condition = form.has_air_condition
+        room.name = form.name.data
+        room.capacity = form.capacity.data
+        room.floor = form.floor.data
+        room.seats = form.seats.data
+        room.projector = form.projector.data
+        room.air_condition = form.air_condition.data
+        room.whiteboard = form.whiteboard.data
     return render_template('rooms/create_room.html',
                            title='Update room info',
                            form=form, legend='Update room info')
 
-#TODO
+
 @bp.route('/room/delete/<int:room_id>', methods=['POST', 'GET'])
 @login_required
 def delete_room(room_id):
