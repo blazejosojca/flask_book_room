@@ -69,13 +69,13 @@ def update_room(room_id):
         flash(_('Room info has been updated!'))
         return redirect(url_for('rooms.list_rooms'))
     elif request.method == 'GET':
-        room.name = form.name.data
-        room.capacity = form.capacity.data
-        room.floor = form.floor.data
-        room.seats = form.seats.data
-        room.projector = form.projector.data
-        room.air_condition = form.air_condition.data
-        room.whiteboard = form.whiteboard.data
+        room.name = form.name
+        room.capacity = form.capacity
+        room.floor = form.floor
+        room.seats = form.seats
+        room.projector = form.projector
+        room.air_condition = form.air_condition
+        room.whiteboard = form.whiteboard
     return render_template('rooms/create_room.html',
                            title='Update room info',
                            form=form, legend='Update room info')
