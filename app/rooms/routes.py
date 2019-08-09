@@ -37,7 +37,8 @@ def create_room():
 @login_required
 def list_rooms():
     rooms = Room.query.all()
-    return render_template('rooms/list_rooms.html', rooms=rooms)
+    return render_template('rooms/list_rooms.html', rooms=rooms, title='List of rooms',
+                           legend='Rooms')
 
 @bp.route('/room/<int:room_id>', methods=['GET', 'POST'])
 @login_required
