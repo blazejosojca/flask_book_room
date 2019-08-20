@@ -37,8 +37,11 @@ def create_department():
 @bp.route('/department/<int:department_id>', methods=['GET', 'POST'])
 @login_required
 def department_details(department_id):
+    """
+    View dep. details
+    """
     department = Department.query.get(department_id)
-    return render_template('department/department.html',
+    return render_template('department/view_department.html',
                            title='Department details',
                            department=department,
                            legend='Department')

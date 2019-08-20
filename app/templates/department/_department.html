@@ -10,23 +10,9 @@
 <div>
     <div class="row">
       <ul class="list-group">
-        <li class="list-group-item">Name - {{ room.name }}</li>
-        <li class="list-group-item">Capacity - {{ room.seats }}
-        </li>
-        <li class="list-group-item">Projector -
-            {{ projector }}
-        </li>
-        <li class="list-group-item">Air condition -
-            {{ air_condition }}</li>
-          <li class="list-group-item">Whiteboard -
-            {{ whiteboard  }}</li>
+          <li>test</li>
       </ul>
     </div>
 </div>
-
-
-    <div>
-        <a href="{{ url_for ('booking.make_booking', room_id=room.id) }}" type="button" class="btn btn-info btn-lg btn-block">Make Reservation</a>
-    </div>
 
 {% endblock %}
