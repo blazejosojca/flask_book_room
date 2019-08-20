@@ -40,7 +40,7 @@ def list_rooms():
 def room_details(room_id):
     room = Room.query.get_or_404(room_id)
     air_condition = room.has_air_condition()
-    projector = room.has_projector_info()
+    projector = room.has_projector()
     whiteboard = room.has_whiteboard()
 
     return render_template('rooms/view_room.html', room=room,
@@ -49,7 +49,6 @@ def room_details(room_id):
                            whiteboard=whiteboard,
                            title='Room details',
                            legend='Room')
-
 
 @bp.route('/room/update/<int:room_id>', methods=['GET', 'POST'])
 @login_required

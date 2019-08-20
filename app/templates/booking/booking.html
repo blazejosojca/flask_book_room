@@ -1,17 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Reservation of room: {{ room.name }} </h1>
+    <h1>Booking of room: {{ room.name }} </h1>
 
     <div class="content-section">
     <form action="" method="POST" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
-
-        <p>
-            {{ form.reservation_date.label }}<br>
-            {{ form.reservation_date() }}
-            {% for error in form.reservation_date.errors %}
+        <legend>{{ legend }}</legend>
+            <p>
+                {{ form.meeting_title.label }}<br>
+                {{ form.meeting_title() }}
+                {% for error in form.meeting_title.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+            {{ form.meeting_date.label }}<br>
+            {{ form.meeting_date() }}
+            {% for error in form.meeting_date.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
