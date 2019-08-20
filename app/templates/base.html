@@ -34,23 +34,29 @@
               </div>
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav">
-                      <li type="button" class="btn btn-light">
+                      <li class="btn btn-light">
                           <a href="{{ url_for('rooms.list_rooms') }}">Rooms</a>
+                      </li>
+                      <li class="btn btn-light">
+                          <a href="{{ url_for('department.department_list') }}">Departments</a>
+                      </li>
+                      <li class="btn btn-light">
+                          <a href="{{ url_for('booking.list_all_bookings') }}">Bookings</a>
                       </li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right navbar-light bg-light">
                       {% if current_user.is_anonymous %}
-                      <li type="button" class="btn btn-light">
+                      <li  class="btn btn-light">
                           <a href="{{ url_for('auth.login') }}">Login</a>
                       </li>
-                      <li type="button" class="btn btn-light">
+                      <li class="btn btn-light">
                           <a href="{{ url_for('auth.register') }}">Register</a>
                       </li>
                       {% else %}
-                      <li type="button" class="btn btn-light">
+                      <li class="btn btn-light">
                           <a href="#">Account</a>
                       </li>
-                      <li type="button" class="btn btn-light">
+                      <li class="btn btn-light">
                           <a href="{{ url_for('auth.logout') }}">Logout</a>
                       </li>
                       {% endif %}

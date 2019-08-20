@@ -9,7 +9,7 @@
             <ul class="list-group">
                 <li class="list-group-item">
                    Room
-                    <a href="{{ url_for ('rooms.details_room', room_id=room.id) }}">{{ room.name }}</a>
+                    <a href="{{ url_for ('rooms.room_details', room_id=room.id) }}">{{ room.name }}</a>
                 </li>
             </ul>
         {% endfor %}

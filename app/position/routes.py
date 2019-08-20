@@ -30,7 +30,7 @@ def make_booking(room_id):
 
         flash('Reservation has been made')
         return redirect(url_for('rooms.list_rooms'))
-    return render_template('booking/booking.html',
+    return render_template('booking/create_booking.html',
                            title='make_reservation',
                            form=form,
                            legend='New reservation',
@@ -44,7 +44,7 @@ def view_booking(booking_id):
     
     reservation = Booking.query.get(reservation_id)
 
-    return render_template('booking/booking.html.html', booking=booking)
+    return render_template('booking/create_booking.html.html', booking=booking)
 
 
 

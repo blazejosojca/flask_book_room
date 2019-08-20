@@ -30,7 +30,7 @@ def make_booking(room_id):
 
         flash('Reservation has been made')
         return redirect(url_for('rooms.list_rooms'))
-    return render_template('booking/booking.html',
+    return render_template('booking/create_booking.html',
                            title='make_reservation',
                            form=form,
                            legend='New booking',
@@ -41,17 +41,18 @@ def make_booking(room_id):
 @bp.route('/booking/<int:booking_id>', methods=['GET', 'POST'])
 @login_required
 def view_booking(booking_id):
-    
-    reservation = Booking.query.get(reservation_id)
-
-    return render_template('booking/booking.html.html', booking=booking)
-
+    booking = Booking.query.get(booking_id)
+    return render_template('booking/create_booking.html', booking=booking)
 
 
 @bp.route('/booking/delete/<int:booking_id>', methods=['GET', 'POST'])
 def delete_booking():
     pass
 
+
+@bp.route('/booking/list', methods=['GET', 'POST'])
+def list_all_bookings():
+    return render_template('booking/list_bookings.html')
 
 @bp.route('/booking/list/<int:room_id>', methods=['GET', 'POST'])
 def list_bookings_for_room():
