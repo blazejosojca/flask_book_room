@@ -73,7 +73,7 @@ def edit_department(department_id):
                            legend='Edit department')
 
 
-@bp.route('/department/delete/<int:department:id>', methods=['GET', 'POST'])
+@bp.route('/department/delete/<int:department_id>', methods=['GET', 'POST'])
 @login_required
 def delete_department(department_id):
     department=Department.query.get_or_404(department_id)

@@ -18,12 +18,12 @@ def make_booking(room_id):
     room = Room.query.filter_by(id=room_id).first()
     if form.validate_on_submit():
         reservation = Booking(
-            user_id=current_user.id,
+            host_id=current_user.id,
             room_id=room_id,
             booking_date=datetime.utcnow(),
-            reservation_date=form.booking_date.data,
+            meeting_title=form.meeting_title.data,
+            meeting_date=form.meeting_date.data,
             description=form.description.data,
-            reserved=True,
         )
         db.session.add(reservation)
         db.session.commit()
@@ -33,7 +33,7 @@ def make_booking(room_id):
     return render_template('booking/booking.html',
                            title='make_reservation',
                            form=form,
-                           legend='New reservation',
+                           legend='New booking',
                            room=room,
                            user=current_user)
 

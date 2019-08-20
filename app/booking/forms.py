@@ -6,7 +6,7 @@ from wtforms.fields.html5 import DateField
 
 
 class BookingForm(FlaskForm):
-    title = StringField(_('Meeting title:', validators=[]))
+    meeting_title = StringField(_('Meeting title:', validators=[DataRequired()]))
     meeting_date = DateField(_('Date of meeting', validators=[DataRequired()]))
     description = TextAreaField(_("Description", validators=[Length(max=130)]))
     submit = SubmitField(_("Done!"))
