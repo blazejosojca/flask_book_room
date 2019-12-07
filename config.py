@@ -16,10 +16,3 @@ class Config(object):
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
-
-class TestingConfig(Config):
-    ENV = 'testing'
-    DEBUG = False
-    TESTING = True
-    WTF_CSRF_ENABLED = False
-    SQLALCHEMY_DATABASE_URI = 'mysql://user:password@localhost/bookings_test'

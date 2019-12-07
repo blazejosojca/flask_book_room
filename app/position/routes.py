@@ -41,10 +41,10 @@ def make_booking(room_id):
 @bp.route('/booking/<int:booking_id>', methods=['GET', 'POST'])
 @login_required
 def view_booking(booking_id):
-    
-    reservation = Booking.query.get(reservation_id)
-
-    return render_template('booking/create_booking.html.html', booking=booking)
+    pass
+    # reservation = Booking.query.get(reservation_id)
+    #
+    # return render_template('booking/create_booking.html.html', booking=booking)
 
 
 

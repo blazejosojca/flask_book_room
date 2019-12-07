@@ -1,10 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% block app_content %}
 
-</body>
-</html>
+<div>
+    <a href="{{ url_for ('bookings.update_bookings', booking_id=booking.id) }}" type="button" class="btn btn-primary">
+        Update
+    </a>
+    <a href="{{ url_for ('bookings.delete_booking', booking_id=booking.id) }}" class="btn btn-warning" type="button" >Remove</a>
+</div>
+<div>
+    <div class="row">
+      <ul class="list-group">
+        <li class="list-group-item">Title - {{ booking.meeting_title }}</li>
+        <li class="list-group-item">Host - {{ user_name }}
+        </li>
+        <li class="list-group-item">Booking date -
+            {{ booking.booking_date }}
+        </li>
+        <li class="list-group-item">Meeting date -
+            {{ booking.meeting_date }}</li>
+          <li class="list-group-item">Desc:
+            {{ booking.description  }}</li>
+      </ul>
+    </div>
+</div>
+
+{% endblock %}

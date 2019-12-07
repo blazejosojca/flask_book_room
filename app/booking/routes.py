@@ -44,24 +44,29 @@ def view_booking(booking_id):
     booking = Booking.query.get(booking_id)
     return render_template('booking/create_booking.html', booking=booking)
 
-
 @bp.route('/booking/delete/<int:booking_id>', methods=['GET', 'POST'])
-def delete_booking():
-    pass
-
+def delete_booking(booking_id):
+    booking = Booking.query.get(booking_id)
+    db.session.delete(booking)
+    db.session.commit()
+    flash('Booking has been removed !')
+    return redirect(url_for('booking.view_booking'))
 
 @bp.route('/booking/list', methods=['GET', 'POST'])
 def list_all_bookings():
-    return render_template('booking/list_bookings.html')
+    bookings = Booking.query.all()
+    return render_template('booking/list_bookings.html', bookings=bookings)
 
 @bp.route('/booking/list/<int:room_id>', methods=['GET', 'POST'])
-def list_bookings_for_room():
-    pass
+def list_bookings_for_room(room_id):
+    bookings_for_room = Booking.query.filter_by(room_id=room_id)
+    render_template('booking/list_bookings.html', bookings=bookings_for_room)
 
 
-@bp.route('/booking/list/<int:user_id>', methods=['GET', 'POST'])
-def list_bookings_for_user():
-    pass
+@bp.route('/booking/list/<int:host_id>', methods=['GET', 'POST'])
+def list_bookings_for_user(host_id):
+    bookings_for_host = Booking.query.filter_by(host_id=host_id)
+    render_template('booking/list_bookings.html', bookings=bookings_for_host)
 
 
 @bp.route('/booking/update/<int:booking_id>', methods=['GET', 'POST'])

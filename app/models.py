@@ -93,6 +93,7 @@ class Room(db.Model):
 
 
 class Booking(db.Model):
+
     id = db.Column(db.Integer, primary_key=True)
     meeting_title = db.Column(db.String(64))
     host_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -107,4 +108,4 @@ class Booking(db.Model):
         return full_name
 
     def __repr__(self):
-        return '<Booking: {} reserved {} on {} >'.format(self.host_id, self.room_id, self.reservation_date)
+        return '<Booking: {} reserved {} on {} >'.format(self.host_id, self.room_id, self.meeting_date)

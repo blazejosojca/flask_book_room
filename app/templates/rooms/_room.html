@@ -1,11 +1,10 @@
 {% block app_content %}
 
 <div>
-    <a href="{{ url_for ('rooms.create_room') }}" type="button" class="btn btn-primary">
+    <a href="{{ url_for ('rooms.update_room', room_id=room.id) }}" type="button" class="btn btn-primary">
         Update
     </a>
     <a href="{{ url_for ('rooms.delete_room', room_id=room.id) }}" class="btn btn-warning" type="button" >Delete</a>
-    <a href="{{ url_for ('rooms.delete_room', room_id=room.id) }}" class="btn btn-info" type="button" >Reservations</a>
     <a href="{{ url_for ('rooms.list_rooms') }}" class="btn btn-info" type="button" >See all</a>
 </div>
 <div>
