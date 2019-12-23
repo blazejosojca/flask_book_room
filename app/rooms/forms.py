@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_babel import _
 from wtforms import StringField, SubmitField, BooleanField, IntegerField
-from wtforms.validators import DataRequired, ValidationError, Length, EqualTo, NumberRange
+from wtforms.validators import DataRequired, Length, NumberRange
 
 from app.models import Room
 

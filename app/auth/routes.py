@@ -18,12 +18,11 @@ def register():
             first_name=form.first_name.data,
             second_name=form.second_name.data,
             email=form.email.data,
-            mobile_phone = form.mobile_phone.data
+            mobile_phone = form.mobile_phone.data,
             )
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-
         flash(_l("A new user added. Congratulations!"), 'success')
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html', title='Register', form=form)

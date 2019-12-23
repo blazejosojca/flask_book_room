@@ -1,4 +1,5 @@
 from app import db, login
+
 from flask_login import UserMixin
 from werkzeug.security import (generate_password_hash,
                                check_password_hash)
@@ -16,7 +17,7 @@ class User(UserMixin, db.Model):
     first_name = db.Column(db.String(64), nullable=False)
     second_name = db.Column(db.String(64), nullable=False)
     email = db.Column(db.String(64), nullable=False, unique=True)
-    mobile_phone = db.Column(db.String(64))
+    mobile_phone = db.Column(db.String(64), nullable=False,unique=True)
     position_id = db.Column(db.Integer, db.ForeignKey('position.id'))
     department_id = db.Column(db.Integer, db.ForeignKey('department.id'))
     bookings = db.relationship('Booking', backref='host', lazy='dynamic')
@@ -31,6 +32,29 @@ class User(UserMixin, db.Model):
 
     def get_user_full_name(self):
         return '{} {}'.format(self.first_name, self.second_name)
+
+    def to_dict(self, include_email=False):
+        data ={
+            'id': self.id,
+            'first_name':self.first_name,
+            'second_name':self.second_name,
+            'mobile_phone':self.mobile_phone,
+            'position_id':self.position_id,
+            'department_id':self.department_id,
+            'bookings':self.bookings.count(),
+            'last_seen':self.last_seen.isoformat() + 'Z',
+        }
+        if include_email:
+            data['email'] = self.email
+        return data
+    
+    def from_dict(self, data, new_user=False):
+        for field in ['first_name', 'last_name', 'email']:
+            if field in data:
+                setattr(self, field, data[field])
+        if new_user and 'password' in data:
+            self.set_password(data['password'])
+
 
     def __repr__(self):
         return '<User: {} {} / {}/ {} >'.format(self.first_name, self.second_name, self.department, self.email)

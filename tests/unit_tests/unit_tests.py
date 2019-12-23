@@ -4,8 +4,8 @@ from mysql import connector
 from flask import current_app, url_for
 
 from app.models import User, Room, Booking, Department, Position
-from app.tests.test_data import TestData as td
-from app.tests.base_test import BaseTest
+from tests.test_data import TestData as td
+from tests.base_test import BaseTest
 
 
 
@@ -64,12 +64,52 @@ class TestRoutes(BaseTest):
 
 
 class TestRegistration(BaseTest):
-    def test_registration_new_user_with_valid_data(self):
+    def test_valid_user_registration(self):
         response = self.register(td.TEST_FIRST_NAME, td.TEST_SECOND_NAME, td.TEST_MOBILE_PHONE, 'new_test@mail.com', td.TEST_PASSWORD, td.TEST_PASSWORD)
         user = User.query.all()
         self.assert200(response)
-        print(user[0])
         self.assertEqual(1, len(user))
+
+    def test_invalid_user_registration_different_password(self):
+        response = self.register(td.TEST_FIRST_NAME,
+                                 td.TEST_SECOND_NAME,
+                                 td.TEST_MOBILE_PHONE,
+                                 'new_test@mail.com',
+                                 td.TEST_PASSWORD,
+                                 'TEST_PASSWORD')
+        self.assertIn(b'Field must be equal to password', response.data)
+
+    def test_invalid_user_registration_unique_user(self):
+        values = (td.TEST_FIRST_NAME,
+                td.TEST_SECOND_NAME,
+                td.TEST_MOBILE_PHONE,
+                'new_test@mail.com',
+                td.TEST_PASSWORD,
+                'TEST_PASSWORD')
+        self.register(*values)
+        response = self.register(*values)
+        self.assertIn(b'Email already exists. Use a different email!', response.data)
+
+
+class TestLogin(BaseTest):
+    Email = 'new_test@mail.com'
+    DATA = (td.TEST_FIRST_NAME, td.TEST_SECOND_NAME, td.TEST_MOBILE_PHONE, Email, td.TEST_PASSWORD, td.TEST_PASSWORD)
+    def test_login_valid_credentials(self):
+        self.register(*self.DATA)
+        # response = self.login('new_test@mail.com, ')user = User.query.all()
+        response = self.login(self.Email, td.TEST_PASSWORD)
+        self.assertEqual(response.status_code, 301)
+
+
+    def test_login_empty_credentials(self):
+        pass
+
+    def test_login_invalid_password(self):
+        pass
+
+    def test_login_invalid_email(self):
+        pass
+
 
 class TestDepartment(BaseTest):
     def test_add_new_department(self):

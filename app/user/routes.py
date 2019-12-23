@@ -12,6 +12,13 @@ from app.auth.forms import RegistrationForm, LoginForm
 def edit_user():
     pass
 
+
+@bp.route('user/edit/<int:user_id>')
+@login_required
+def edit_user():
+    pass
+
+
 @bp.route('user/<int:user_id>')
 def user_details():
     pass

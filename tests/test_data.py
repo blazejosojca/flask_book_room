@@ -1,4 +1,5 @@
 class TestData(object):
+
     TEST_FIRST_NAME = 'John'
     TEST_SECOND_NAME = 'Doe'
     TEST_USER_EMAIL = 'test@mail.com'

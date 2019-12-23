@@ -1,6 +1,6 @@
 
 from datetime import datetime
-from flask import url_for, render_template, flash
+from flask import url_for, render_template, flash, abort
 from flask_login import current_user, login_required
 
 from werkzeug.utils import redirect
@@ -70,8 +70,18 @@ def list_bookings_for_user(host_id):
 
 
 @bp.route('/booking/update/<int:booking_id>', methods=['GET', 'POST'])
-def update_bookings():
-    pass
+def update_bookings(booking_id):
+    booking = Booking.query.get_or_404(booking_id)
+    if booking.host_id != current_user:
+        abort(403)
+    form = BookingForm()
+    if form.validate_on_submit():
+        booking.room_id = form.room_id.data,
+        booking.booking_date = datetime.utcnow(),
+        booking.meeting_title = form.meeting_title.data,
+        booking.description = form.description.data,
+
+
 
 
 @bp.context_processor

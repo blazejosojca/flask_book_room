@@ -1,8 +1,8 @@
 """ importing flask modules, internal app modules """
 from flask_babel import _, lazy_gettext as _l
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, BooleanField
-from wtforms.validators import DataRequired, Email, ValidationError, Length, EqualTo, Required
+from flask_wtf import Form, FlaskForm
+from wtforms import StringField, SubmitField, PasswordField, BooleanField, validators
+from wtforms.validators import DataRequired, Email, ValidationError, Length, EqualTo
 from app.models import User
 
 class RegistrationForm(FlaskForm):
@@ -11,14 +11,20 @@ class RegistrationForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     mobile_phone = StringField('Mobile', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    password_confirmation = PasswordField(_l('Confirm Password', validators=[DataRequired(), EqualTo('password')]))
+    password_confirmation = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Sign Up!')
 
-    def validate_user_email(self, email):
-        user = User.query.filter_by(email=email.data).first()
-        if user is not None:
+    def validate_email(self, email):
+        if User.query.filter_by(email=email.data).first():
             raise ValidationError(
-                _l('This username already exists. Please use a different email!'))
+                'Email already exists. Use a different email!')
+
+    def validate_mobile_phone(self, mobile_phone):
+        if User.query.filter_by(email=mobile_phone.data).first():
+            raise ValidationError(
+                'This mobile number already exists. Use a different number!')
+        
+
 
 
 class LoginForm(FlaskForm):

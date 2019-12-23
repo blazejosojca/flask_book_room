@@ -5,17 +5,7 @@ from flask import url_for, current_app
 from flask_testing import TestCase
 
 from app import create_app, db
-from config import BASEDIR, Config
-from app.models import Booking, Room, User, load_user
-
-
-class TestingConfig(Config):
-    ENV = 'testing'
-    DEBUG = False
-    TESTING = True
-    WTF_CSRF_ENABLED = False
-    SQLALCHEMY_DATABASE_URI = 'mysql://user:password@localhost/bookings_test'
-
+from config import TestingConfig
 
 
 class BaseTest(TestCase):

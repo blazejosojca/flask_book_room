@@ -37,6 +37,7 @@ def create_app(config_class=DevelopmentConfig):
     from app.booking import bp as bookings_bp
     from app.department import bp as department_bp
     from app.position import bp as position_bp
+    from app.api import bp as api_bp
 
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(errors_bp)
@@ -44,5 +45,6 @@ def create_app(config_class=DevelopmentConfig):
     app.register_blueprint(rooms_bp)
     app.register_blueprint(bookings_bp)
     app.register_blueprint(department_bp)
+    app.register_blueprint(api_bp, url_prefix='/api')
 
     return app

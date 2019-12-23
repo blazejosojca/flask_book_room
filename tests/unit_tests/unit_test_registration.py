@@ -1,8 +1,8 @@
 
 
 from app.models import User
-from app.tests.test_data import TestData as td
-from app.tests.base_test import BaseTest
+from tests.test_data import TestData as td
+from tests.base_test import BaseTest
 
 
 class TestRegistration(BaseTest):
